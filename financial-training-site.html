@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Peace University · Tyno Carter</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --navy: #0B1628;
+    --navy-mid: #142240;
+    --navy-light: #1E3260;
+    --cream: #F5F0E8;
+    --text-muted: #8A9BB5;
+    --success: #3DB88A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--cream); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,22,40,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 16px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    animation: fadeDown 0.6s ease both;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; }
+  .nav-logo span { color: var(--cream); font-weight: 400; }
+  .nav-sub { font-size: 0.67rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.83rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--navy); padding: 10px 24px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 130px 60px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 65% 40%, rgba(201,168,76,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 50% at 20% 80%, rgba(30,50,96,0.6) 0%, transparent 60%); }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-content { position: relative; max-width: 700px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 28px; animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.08; color: var(--cream); margin-bottom: 24px; animation: fadeUp 0.7s 0.2s ease both; }
+  h1 em { font-style: normal; color: var(--gold); }
+  .hero-sub { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: var(--text-muted); max-width: 540px; margin-bottom: 44px; animation: fadeUp 0.7s 0.3s ease both; }
+  .hero-actions { display: flex; gap: 16px; align-items: center; animation: fadeUp 0.7s 0.4s ease both; }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 16px 36px; border-radius: 4px; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; display: inline-block; text-align: center; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .btn-outline { background: transparent; color: var(--cream); padding: 15px 36px; border-radius: 4px; font-size: 0.88rem; font-weight: 500; border: 1px solid rgba(245,240,232,0.25); text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats { position: absolute; right: 60px; bottom: 80px; display: flex; gap: 44px; animation: fadeUp 0.7s 0.5s ease both; }
+  .stat { text-align: right; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 5px; letter-spacing: 0.04em; max-width: 130px; line-height: 1.45; }
+
+  /* SECTIONS */
+  section { padding: 100px 60px; }
+  .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--cream); line-height: 1.2; margin-bottom: 20px; }
+  .section-intro { font-size: 1rem; color: var(--text-muted); max-width: 560px; line-height: 1.7; }
+
+  /* COURSE */
+  #classes { background: var(--navy-mid); }
+  .classes-header { margin-bottom: 60px; }
+  .course-wrap { display: grid; grid-template-columns: 1fr 1.45fr; gap: 56px; align-items: start; }
+  .course-card { background: var(--navy); border: 1px solid rgba(201,168,76,0.18); border-radius: 10px; padding: 40px; position: relative; overflow: hidden; }
+  .course-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .course-tag { display: inline-block; background: rgba(201,168,76,0.1); color: var(--gold); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; margin-bottom: 20px; }
+  .course-card h3 { font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--cream); margin-bottom: 8px; line-height: 1.25; }
+  .course-byline { font-size: 0.82rem; color: var(--gold); font-weight: 500; margin-bottom: 18px; letter-spacing: 0.04em; }
+  .course-card > p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+  .course-meta { display: flex; gap: 24px; flex-wrap: wrap; border-top: 1px solid rgba(201,168,76,0.1); padding-top: 24px; margin-bottom: 28px; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 0.67rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .meta-value { font-size: 0.88rem; color: var(--cream); font-weight: 500; }
+
+  /* Sessions list */
+  .sessions-list { display: flex; flex-direction: column; }
+  .session-item { display: flex; gap: 16px; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid rgba(201,168,76,0.07); }
+  .session-item:last-child { border-bottom: none; }
+  .session-num { width: 28px; height: 28px; flex-shrink: 0; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: var(--gold); }
+  .session-title { font-size: 0.92rem; color: var(--cream); font-weight: 500; line-height: 1.4; }
+  .session-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+
+  /* WHY */
+  #why { background: var(--navy); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .why-features { display: flex; flex-direction: column; gap: 32px; }
+  .feature { display: flex; gap: 20px; align-items: flex-start; }
+  .feature-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .feature-text h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--cream); margin-bottom: 6px; }
+  .feature-text p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+  .why-visual { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px; padding: 44px 40px; }
+  .testimonial-quote { font-family: 'Playfair Display', serif; font-size: 1.2rem; line-height: 1.65; color: var(--cream); margin-bottom: 28px; }
+  .testimonial-quote::before { content: '\201C'; font-size: 4rem; color: var(--gold); line-height: 0; vertical-align: -0.5em; margin-right: 4px; }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--navy-light)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; color: var(--navy); font-size: 1rem; }
+  .author-name { font-size: 0.9rem; font-weight: 600; color: var(--cream); }
+  .author-title { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* SURVEY */
+  #survey { background: var(--navy-mid); }
+  .survey-wrap { max-width: 800px; margin: 60px auto 0; background: var(--navy); border: 1px solid rgba(201,168,76,0.18); border-radius: 12px; overflow: hidden; }
+  .survey-header { background: linear-gradient(135deg, var(--navy-light), var(--navy-mid)); padding: 36px 48px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .survey-header h3 { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: var(--cream); margin-bottom: 8px; }
+  .survey-header p { font-size: 0.88rem; color: var(--text-muted); }
+  .survey-body { padding: 48px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .form-group { margin-bottom: 24px; }
+  .form-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 6px; padding: 14px 18px; color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(138,155,181,0.5); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+  .form-group select option { background: var(--navy-mid); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  /* Session option cards */
+  .session-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  .session-option { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 8px; padding: 22px; cursor: pointer; transition: all 0.2s; }
+  .session-option:hover { border-color: rgba(201,168,76,0.45); }
+  .session-option.selected { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  .sopt-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .sopt-dates { font-family: 'Playfair Display', serif; font-size: 1.08rem; color: var(--cream); font-weight: 700; margin-bottom: 4px; }
+  .sopt-detail { font-size: 0.78rem; color: var(--text-muted); }
+
+  .time-options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .time-chip { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 100px; padding: 8px 20px; cursor: pointer; transition: all 0.2s; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+  .time-chip:hover { border-color: var(--gold); color: var(--cream); }
+  .time-chip.selected { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold); }
+  .day-options { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .day-chip { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 6px; padding: 9px 16px; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+  .day-chip:hover { border-color: var(--gold); color: var(--cream); }
+  .day-chip.selected { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold); }
+  .divider { height: 1px; background: rgba(201,168,76,0.1); margin: 32px 0; }
+  .form-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .privacy-note { font-size: 0.78rem; color: var(--text-muted); }
+  .privacy-note span { color: var(--gold); }
+  #submit-btn { background: var(--gold); color: var(--navy); border: none; border-radius: 6px; padding: 16px 40px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  #submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .success-state { display: none; text-align: center; padding: 60px 48px; flex-direction: column; align-items: center; }
+  .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(61,184,138,0.15); border: 1px solid var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 24px; }
+  .success-state h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 12px; }
+  .success-state p { font-size: 0.95rem; color: var(--text-muted); }
+
+  /* FOOTER */
+  footer { background: var(--navy); border-top: 1px solid rgba(201,168,76,0.12); padding: 48px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--gold); font-weight: 700; margin-bottom: 4px; }
+  .footer-title { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:900px){
+    nav{padding:14px 24px;} .nav-links{display:none;}
+    section{padding:70px 24px;}
+    .hero{padding:100px 24px 60px;}
+    .hero-stats{position:static;margin-top:44px;flex-wrap:wrap;gap:24px;}
+    .stat{text-align:left;}
+    .course-wrap{grid-template-columns:1fr;gap:40px;}
+    .why-grid{grid-template-columns:1fr;gap:48px;}
+    .form-row{grid-template-columns:1fr;}
+    .session-options{grid-template-columns:1fr;}
+    .survey-body{padding:28px;} .survey-header{padding:24px 28px;}
+    footer{padding:36px 24px;flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <div class="nav-logo">Bro Tyno <span>Carter</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#classes">The Course</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#survey">Register</a></li>
+  </ul>
+  <a href="#survey" class="nav-cta">Choose a Date</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Dave Ramsey's Financial Peace University</div>
+    <h1>Biblical Wealth:<br><em>9 Steps</em><br>To Freedom</h1>
+    <p class="hero-sub">An instructor-led, nine-week journey through God's principles for money — budgeting, debt elimination, investing, and building a legacy. Led by Bro Tyno Carter.</p>
+    <div class="hero-actions">
+      <a href="#classes" class="btn-primary">See All 9 Sessions</a>
+      <a href="#survey" class="btn-outline">Vote on Dates</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">10M+</div>
+      <div class="stat-label">People who have completed Financial Peace University</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$5,300</div>
+      <div class="stat-label">Average debt paid off by FPU graduates</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$2,700</div>
+      <div class="stat-label">Average debt reduced in first 90 days</div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSE -->
+<section id="classes">
+  <div class="classes-header">
+    <div class="section-label">The Course</div>
+    <h2>Financial Peace University</h2>
+    <p class="section-intro">Nine lessons. Nine weeks. One proven system for achieving financial freedom through biblical money management and Dave Ramsey's Baby Steps.</p>
+  </div>
+  <div class="course-wrap">
+    <div class="course-card">
+      <div class="course-tag">9-Week Course</div>
+      <h3>Financial Peace University</h3>
+      <p class="course-byline">Dave Ramsey's FPU · Led by Bro Tyno Carter</p>
+      <p>An instructor-led, biblically grounded course covering budgeting, debt elimination, insurance, investing, real estate, and generosity. You'll leave with a clear, step-by-step plan for your financial future.</p>
+      <div class="cost-note" style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:16px;margin-bottom:20px;">
+        <div style="font-size:0.72rem;color:var(--gold);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Materials Cost</div>
+        <div style="font-size:1.1rem;color:var(--cream);font-weight:600;">$79–$99 per household</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">Cost depends on participant count · <a href="https://www.ramseysolutions.com/tools" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:500;border-bottom:1px solid var(--gold);">See cost breakdown</a></div>
+      </div>
+      <div style="border-top:1px solid rgba(201,168,76,0.1);padding-top:20px;margin-bottom:24px;">
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">What's Included</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:0.88rem;color:var(--cream);display:flex;align-items:flex-start;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">✓</span> <span>One year of access to all nine video lessons</span></li>
+          <li style="font-size:0.88rem;color:var(--cream);display:flex;align-items:flex-start;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">✓</span> <span>Join any in-person or virtual class session</span></li>
+          <li style="font-size:0.88rem;color:var(--cream);display:flex;align-items:flex-start;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">✓</span> <span>Three months of premium EveryDollar budgeting app</span></li>
+          <li style="font-size:0.88rem;color:var(--cream);display:flex;align-items:flex-start;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">✓</span> <span>Self-Study Workbook with answers included</span></li>
+        </ul>
+      </div>
+      <div class="course-meta">
+        <div class="meta-item"><span class="meta-label">Format</span><span class="meta-value">Instructor-Led</span></div>
+        <div class="meta-item"><span class="meta-label">Duration</span><span class="meta-value">9 Weeks</span></div>
+        <div class="meta-item"><span class="meta-label">Sessions</span><span class="meta-value">9 Lessons</span></div>
+      </div>
+      <a href="#survey" class="btn-primary">Reserve My Spot</a>
+    </div>
+    <div class="sessions-list">
+      <div class="session-item">
+        <div class="session-num">1</div>
+        <div>
+          <div class="session-title">Build a Starter Emergency Fund &amp; Budgeting</div>
+          <div class="session-subtitle">Baby Step 1 · The foundation of financial peace</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">2</div>
+        <div>
+          <div class="session-title">Pay Off All Debt</div>
+          <div class="session-subtitle">Baby Step 2 · The Debt Snowball method</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">3</div>
+        <div>
+          <div class="session-title">Save a Fully Funded Emergency Fund</div>
+          <div class="session-subtitle">Baby Step 3 · 3–6 months of expenses</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">4</div>
+        <div>
+          <div class="session-title">Invest for the Future &amp; Build Wealth</div>
+          <div class="session-subtitle">Baby Steps 4, 5, 6 &amp; 7 · Long-term financial freedom</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">5</div>
+        <div>
+          <div class="session-title">Buyer Beware</div>
+          <div class="session-subtitle">The Power of Marketing · Making wise consumer decisions</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">6</div>
+        <div>
+          <div class="session-title">The Role of Insurance</div>
+          <div class="session-subtitle">Protecting what you've built</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">7</div>
+        <div>
+          <div class="session-title">Retirement &amp; College Planning</div>
+          <div class="session-subtitle">Mastering Investing · Planning for every stage of life</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">8</div>
+        <div>
+          <div class="session-title">Real Estate &amp; Mortgages</div>
+          <div class="session-subtitle">Buying smart and building equity</div>
+        </div>
+      </div>
+      <div class="session-item">
+        <div class="session-num">9</div>
+        <div>
+          <div class="session-title">Outrageous Generosity</div>
+          <div class="session-subtitle">Living and Giving · The ultimate goal of financial freedom</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-label">Why Join This Class</div>
+  <h2>Real Change. Proven Results.</h2>
+  <div class="why-grid">
+    <div class="why-features">
+      <div class="feature">
+        <div class="feature-icon">✝️</div>
+        <div class="feature-text">
+          <h4>Biblical Foundation</h4>
+          <p>FPU is built on biblical principles for managing money — a values-based transformation in how you think about wealth, not just financial tactics.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <div class="feature-text">
+          <h4>Step-by-Step Baby Steps System</h4>
+          <p>Dave Ramsey's Baby Steps give you a clear, sequential roadmap — no guessing, no overwhelm. Just the next right move.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👥</div>
+        <div class="feature-text">
+          <h4>Community Accountability</h4>
+          <p>You'll go through this journey with a small group — building relationships and accountability that make real change possible.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎓</div>
+        <div class="feature-text">
+          <h4>Expert Instruction by Bro Tyno Carter</h4>
+          <p>Instructor-led sessions that bring real-world financial advisory experience to every lesson — translating FPU principles into your actual life.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <p class="testimonial-quote">FPU completely changed how my family handles money. We paid off $8,000 in debt within six months and finally have a budget that actually works.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">DW</div>
+        <div>
+          <div class="author-name">Diane W.</div>
+          <div class="author-title">FPU Graduate · Debt-Free in 6 Months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section id="survey">
+  <div style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="section-label">Date Preference Survey</div>
+    <h2>Choose Your Session Window</h2>
+    <p class="section-intro" style="margin:0 auto;">We're scheduling two potential cohorts. Vote for the window that works best for you — we'll confirm the start date based on the highest interest.</p>
+  </div>
+  <div class="survey-wrap">
+    <div class="survey-header">
+      <h3>FPU Registration Interest Form</h3>
+      <p>Takes about 2 minutes · Led by Bro Tyno Carter</p>
+    </div>
+    <div class="survey-body" id="survey-form-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="e.g. Marcus" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="e.g. Johnson" id="lname">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@email.com" id="email">
+        </div>
+        <div class="form-group">
+          <label>Phone (Optional)</label>
+          <input type="tel" placeholder="(555) 000-0000" id="phone">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>Which session window works best for you?</label>
+        <div class="session-options">
+          <div class="session-option" onclick="selectSession(this)">
+            <div class="sopt-label">Option A</div>
+            <div class="sopt-dates">Aug 6 – Oct 8, 2025</div>
+            <div class="sopt-detail">9 weeks · Starts late summer</div>
+          </div>
+          <div class="session-option" onclick="selectSession(this)">
+            <div class="sopt-label">Option B</div>
+            <div class="sopt-dates">Oct 8 – Dec 10, 2025</div>
+            <div class="sopt-detail">9 weeks · Starts fall</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:8px;">
+        <label>Preferred Day of the Week</label>
+        <div class="day-options">
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Monday</div>
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Tuesday</div>
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Wednesday</div>
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Thursday</div>
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Friday</div>
+          <div class="day-chip" onclick="this.classList.toggle('selected')">Saturday</div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:24px;">
+        <label>Preferred Time of Day</label>
+        <div class="time-options">
+          <div class="time-chip" onclick="selectTime(this)">Morning (8–11 AM)</div>
+          <div class="time-chip" onclick="selectTime(this)">Midday (11–2 PM)</div>
+          <div class="time-chip" onclick="selectTime(this)">Afternoon (2–5 PM)</div>
+          <div class="time-chip" onclick="selectTime(this)">Evening (6–8 PM)</div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:24px;">
+        <label>Preferred Format</label>
+        <select id="format">
+          <option value="">Select a preference…</option>
+          <option>Live Virtual (Zoom)</option>
+          <option>In-Person</option>
+          <option>Either works for me</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Questions or Comments?</label>
+        <textarea placeholder="Optional — anything you'd like Tyno to know…" id="notes"></textarea>
+      </div>
+      <div class="divider"></div>
+      <div class="form-footer">
+        <p class="privacy-note">🔒 Your info is <span>never shared or sold</span>. Used only to schedule this cohort.</p>
+        <button id="submit-btn" onclick="submitForm()">Submit My Preferences</button>
+      </div>
+    </div>
+    <div class="success-state" id="success-state">
+      <div class="success-icon">✓</div>
+      <h3>You're on the list!</h3>
+      <p>Thank you — Tyno will reach out with confirmed dates and next steps based on the highest-voted window.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Bro Tyno Carter</div>
+    <div class="footer-title">Financial Peace University Instructor</div>
+  </div>
+  <div class="footer-links">
+    <a href="#classes">The Course</a>
+    <a href="#why">About</a>
+    <a href="#survey">Register</a>
+    <a href="mailto:tynocarter@gmail.com">tynocarter@gmail.com</a>
+  </div>
+  <div class="footer-copy">© 2025 Bro Tyno Carter. All rights reserved.</div>
+</footer>
+
+<script>
+  function selectSession(el) {
+    document.querySelectorAll('.session-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function selectTime(el) {
+    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!fname || !email) { alert('Please enter your name and email to continue.'); return; }
+    document.getElementById('survey-form-body').style.display = 'none';
+    const ss = document.getElementById('success-state');
+    ss.style.display = 'flex';
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.course-card, .sessions-list, .feature, .why-visual, .survey-wrap').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
